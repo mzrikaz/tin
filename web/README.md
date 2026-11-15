@@ -15,6 +15,17 @@ VITE_LEGACY_FINAL=false npm run dev   # live dry run — IRD validates, nothing 
 ```
 A coloured banner at the top of every page always shows which mode you are in.
 
+## GitHub Pages (static demo)
+```bash
+npm run build:pages     # → dist/, relative paths, works under https://<user>.github.io/<repo>/
+```
+`.github/workflows/pages.yml` builds and deploys automatically on every push to `main` that touches `web/`.
+One-time setup: repo **Settings → Pages → Source: GitHub Actions**.
+
+The Pages build is always **demo mode** (`.env.pages`): GitHub Pages is static hosting, and IRD's backend has no
+CORS and needs same-origin session cookies, so live submission is only possible through the dev/preview proxy.
+The page shows an "Unofficial prototype" banner.
+
 ## Never lose data
 - Every keystroke autosaves to `localStorage` (debounced 400 ms, flushed on tab hide / close).
 - Uploaded files are stored in IndexedDB, so they survive reloads too.

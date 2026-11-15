@@ -446,7 +446,11 @@ export default function App() {
       <Header />
       {isMock && (
         <div className="no-print border-b border-amber-300 bg-amber-100 px-4 py-2 text-center text-sm font-semibold text-amber-950 dark:border-amber-800 dark:bg-amber-900/60 dark:text-amber-100">
-          DEMO MODE — nothing is sent to IRD. Reference numbers are fake. Start with <code className="font-mono">VITE_API_MODE=legacy</code> to connect to IRD.
+          {import.meta.env.VITE_PUBLIC_DEMO === 'true' ? (
+            <>Unofficial prototype — not an Inland Revenue Department service. Nothing you enter is sent anywhere; it stays in this browser.</>
+          ) : (
+            <>DEMO MODE — nothing is sent to IRD. Reference numbers are fake. Start with <code className="font-mono">VITE_API_MODE=legacy</code> to connect to IRD.</>
+          )}
         </div>
       )}
       {!isMock && (

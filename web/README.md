@@ -15,6 +15,21 @@ VITE_LEGACY_FINAL=false npm run dev   # live dry run — IRD validates, nothing 
 ```
 A coloured banner at the top of every page always shows which mode you are in.
 
+## Desktop app (live IRD, no server needed)
+```bash
+npm run desktop         # build + open the desktop window
+npm run desktop:dist    # build installers into release/ (this OS)
+```
+`electron/main.cjs` starts a small built-in server on `localhost:51880` that serves `dist/` and forwards
+IRD paths to eservices.ird.gov.lk with cookies re-labelled for localhost (same as the Vite dev proxy),
+so live submission works for anyone who installs the app. The port is fixed (and remembered) because
+drafts in localStorage/IndexedDB are tied to the origin. External links open in the system browser.
+
+Installers for all platforms: push a tag (`git tag v1.0.0 && git push --tags`) and
+`.github/workflows/desktop.yml` builds Windows (`.exe` installer + portable), macOS (`.dmg`) and
+Linux (`.AppImage`, `.deb`) and attaches them to a draft GitHub Release. Builds are unsigned, so
+Windows SmartScreen / macOS Gatekeeper will warn until code-signing certificates are added.
+
 ## GitHub Pages (static demo)
 ```bash
 npm run build:pages     # → dist/, relative paths, works under https://<user>.github.io/<repo>/

@@ -1,7 +1,7 @@
 {
-  "name": "web",
+  "name": "tin-registration",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,13 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "build:pages": "tsc -b && vite build --mode pages",
-    "preview:pages": "vite preview --mode pages"
-  },
-  "dependencies": {
-    "jspdf": "^4.2.1",
-    "lucide-react": "^1.73.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "preview:pages": "vite preview --mode pages",
+    "desktop": "npm run build && electron .",
+    "desktop:dist": "npm run build && electron-builder"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.5",
@@ -23,9 +19,56 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "electron": "^45.3.2",
+    "electron-builder": "^26.18.0",
+    "jspdf": "^4.2.1",
+    "lucide-react": "^1.73.0",
     "oxlint": "^1.90.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "tailwindcss": "^4.3.5",
     "typescript": "~7.0.2",
     "vite": "^8.3.6"
-  }
+  },
+  "description": "TIN registration for the Sri Lanka Inland Revenue Department, with autosave and a better UX.",
+  "author": "Rikaz Zarook",
+  "main": "electron/main.cjs",
+  "build": {
+    "appId": "lk.tin.registration",
+    "productName": "TIN Registration",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "asar": true,
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Office",
+      "syncDesktopName": true
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.finance"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "desktopName": "tin-registration.desktop"
 }
